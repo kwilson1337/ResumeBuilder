@@ -2,10 +2,14 @@
 
 import './step-one.scss'
 import StepOneForm from '@/components/step-one'
+import { useRouter } from 'next/navigation'
 
 export default function stepOne() {
+    const router = useRouter()
+
     const submitForm = (data) => {
-        console.log(data)
+        console.log(data)        
+        // router.push('/resume-builder/step-two', { scroll: false })
     }
 
     return (

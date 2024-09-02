@@ -5,37 +5,31 @@ import { useState } from 'react'
 import Input from '@/components/Input'
 
 export default function stepOneForm({ submitContactInfo }) {
-    const [firstName, setFirstName] = useState({})
-    const [lastName, setLastName] = useState({})
-    const [emailAddress, setEmailAddress] = useState({})
-    const [phoneNumber, setPhoneNumber] = useState({})    
-    
-    const recieveFirstName = (data) => {            
-        setFirstName(data)        
-    }
-
-    const recieveLastName = (data)=> {
-        setLastName(data)        
-    }
-
-    const recieveEmailAddress = (data) => {
-        setEmailAddress(data)
-    }
-
-    const recievePhoneNumber = (data) => {
-        setPhoneNumber(data)
+    const [formData, setFormData] = useState({
+        'First name': '',
+        'Last name': '',
+        'Email address': '',
+        'Phone number': ''
+    })   
+    const [canSubmit, setCanSubmit] = useState(false)    
+            
+    const recieveFormData = (data) => {   
+        const setData = {...formData, ...data}             
+        setFormData(setData)  
+        
+        if(!isEmpty(setData)) {
+            setCanSubmit(true)
+        }
     }
 
     const submitForm = (e) => {
-        e.preventDefault()
-
-        submitContactInfo({
-            ...firstName,
-            ...lastName,
-            ...emailAddress,
-            ...phoneNumber
-        })
+        e.preventDefault()        
+        submitContactInfo(formData)
     }
+
+    const isEmpty = (obj) => {            
+        return Object.values(obj).some(item => item === '')
+    }    
 
     return (
         <>
@@ -44,23 +38,25 @@ export default function stepOneForm({ submitContactInfo }) {
                     <form onSubmit={submitForm} className='step-one-form__form'>
                         <Input
                             placeHolder={'First name'}
-                            sendData={recieveFirstName}
+                            sendData={recieveFormData}
                         />
                         <Input
                             placeHolder={'Last name'}
-                            sendData={recieveLastName}
+                            sendData={recieveFormData}
                         />
                         <Input
                             placeHolder={'Email address'}    
-                            sendData={recieveEmailAddress}
+                            sendData={recieveFormData}
+                            type={'email'}
+                            required                            
                         />
                         <Input
                             placeHolder={'Phone number'}     
-                            sendData={recievePhoneNumber}                       
+                            sendData={recieveFormData}                       
                         />
 
-                        <div className="step-one-form__submit">
-                            <button className="button">Submit</button>
+                        <div className="step-one-form__submit">                            
+                            <button disabled={!canSubmit} className="button">Submit</button>
                         </div>
                     </form>
                 </div>

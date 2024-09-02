@@ -45,6 +45,12 @@ a {
     background-image: var(--color1-grad);
   }
 
+  &:disabled {
+    cursor: auto;
+    background-color: lighten(#5046e5, 10%);
+    border-color: lighten(#5046e5, 10%);
+  }
+
   &:hover {
     color: var(--white) !important;
   }
