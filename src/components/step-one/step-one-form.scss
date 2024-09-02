@@ -1,0 +1,17 @@
+.step-one-form {
+
+    &__form {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        align-items: center;
+        gap: 15px;       
+    }
+
+    &__submit {
+        grid-column: span 2;
+
+        button {
+            width: 100%;
+        }
+    }
+}

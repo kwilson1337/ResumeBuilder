@@ -1,0 +1,27 @@
+.kw-navbar {
+    position: sticky;
+    top: 1px;        
+
+    &__inner {
+        padding: 20px 35px;
+    }
+
+    &__links {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+
+        a {
+            transition: .2s ease-in-out all;
+            font-weight: 500;
+
+            &:hover {
+                color: var(--color1);
+            }
+
+            & + a {
+                margin-left: 20px;
+            }
+        }
+    }
+}
