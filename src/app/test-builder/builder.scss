@@ -1,0 +1,13 @@
+.resume-builder {
+    padding-top: 60px;
+
+    &__inner {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 60px;
+    }
+
+    &__col {
+        padding: 20px;
+    }
+}
