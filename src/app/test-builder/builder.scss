@@ -9,5 +9,25 @@
 
     &__col {
         padding: 20px;
+
+        .szh-accordion {
+
+            & + .szh-accordion {
+                margin-top: 20px;
+            }
+        }
+    }
+
+    &__save {
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+
+        button {
+
+            & + button {
+                margin-left: 10px;
+            }
+        }
     }
 }

@@ -1,0 +1,31 @@
+.resume-info {
+
+    &__desc {
+        margin-bottom: 15px;
+
+        p {
+            margin: 0px;
+        }
+    }
+
+    &__form {        
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        align-items: center;
+        gap: 15px;            
+    }
+
+    .span-2 {
+        grid-column: span 2;
+    }
+    
+    .input-repeater {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        & + .input-repeater {
+            margin-top: 10px;
+        }
+    }
+}

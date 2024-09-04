@@ -1,25 +1,21 @@
 'use client'
 
-import './step-one-form.scss'
+import '../styles.scss'
 import { useState } from 'react'
-import Input from '@/components/Input'
+import Input from '@/components/Inputs/Input.jsx'
 
 export default function stepOneForm({ submitContactInfo }) {
     const [formData, setFormData] = useState({
         'First name': '',
         'Last name': '',
+        'Job title': '',
         'Email address': '',
-        'Phone number': ''
-    })   
-    const [canSubmit, setCanSubmit] = useState(false)    
-            
+        'Phone number': ''        
+    })       
+           
     const recieveFormData = (data) => {   
         const setData = {...formData, ...data}             
-        setFormData(setData)  
-        
-        if(!isEmpty(setData)) {
-            setCanSubmit(true)
-        }
+        setFormData(setData)             
     }
 
     const submitForm = (e) => {
@@ -33,9 +29,13 @@ export default function stepOneForm({ submitContactInfo }) {
 
     return (
         <>
-            <div className="step-one-form">
-                <div className="step-one-form__inner">
-                    <form onSubmit={submitForm} className='step-one-form__form'>
+            <div className="resume-info">
+                <div className="resume-info__inner">
+                    <div className="resume-info__desc">
+                        <p>Your personal information that the employer can use to reach out to you.</p>
+                    </div>                    
+
+                    <form onSubmit={submitForm} className='resume-info__form'>
                         <Input
                             placeHolder={'First name'}
                             sendData={recieveFormData}
@@ -44,6 +44,14 @@ export default function stepOneForm({ submitContactInfo }) {
                             placeHolder={'Last name'}
                             sendData={recieveFormData}
                         />
+
+                        <div className="span-2">
+                            <Input
+                                placeHolder={'Job title'}
+                                sendData={recieveFormData}
+                            />
+                        </div>
+
                         <Input
                             placeHolder={'Email address'}    
                             sendData={recieveFormData}
@@ -52,12 +60,8 @@ export default function stepOneForm({ submitContactInfo }) {
                         />
                         <Input
                             placeHolder={'Phone number'}     
-                            sendData={recieveFormData}                       
-                        />
-
-                        <div className="step-one-form__submit">                            
-                            <button disabled={!canSubmit} className="button">Submit</button>
-                        </div>
+                            sendData={recieveFormData}
+                        />                                                    
                     </form>
                 </div>
             </div>

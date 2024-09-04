@@ -41,9 +41,29 @@ a {
   border-color: var(--color1);
   color: #fff;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &.--grad {
     background-image: var(--color1-grad);
+  }
+
+  &.--outline {
+    background-color: var(--white);
+    border: 1px solid var(--color2);
+    color: var(--black);
+
+    &:hover {
+      color: var(--black) !important;
+    }
+  }
+
+  &.--rounded {
+    width: 30px;
+    height: 30px;
+    padding: 10px;
+    border-radius: 50%;
   }
 
   &:disabled {
