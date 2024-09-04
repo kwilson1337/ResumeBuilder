@@ -3,68 +3,72 @@
 import '../styles.scss'
 import { useState } from 'react'
 import Input from '@/components/Inputs/Input.jsx'
+import Form from '@/components/Forms/Form'
 
-export default function stepOneForm({ submitContactInfo }) {
-    const [formData, setFormData] = useState({
-        'First name': '',
-        'Last name': '',
-        'Job title': '',
-        'Email address': '',
-        'Phone number': ''        
-    })       
-           
-    const recieveFormData = (data) => {   
-        const setData = {...formData, ...data}             
-        setFormData(setData)             
+export default function personalInfoForm({ sendFormData }) {       
+    const [inputs, setInputs] = useState([
+        {
+            id: 'firstName',
+            placeholder: 'First name',
+            copy: ''
+        },
+        {
+            id: 'lastname',
+            placeholder: 'Last name',
+            copy: ''
+        },
+        {
+            id: 'jobTitle',
+            placeholder: 'Job title',
+            copy: ''
+        },
+        {
+            id: 'emailAdress',
+            placeholder: 'Email adress',
+            copy: ''
+        },
+        {
+            id: 'phoneNumber',
+            placeholder: 'Phone Number',
+            copy: ''
+        }
+    ])
+
+    const setInputCopy = (data) => {
+        const objectKey = Object.keys(data)[0]
+        const foundInput = inputs.find(item =>item.id === objectKey)
+        foundInput.copy = data[objectKey]            
+        
+        setInputs([...new Set([...inputs, foundInput])])
     }
 
-    const submitForm = (e) => {
-        e.preventDefault()        
-        submitContactInfo(formData)
+    const renderInputs = (inputs) => {
+        if(inputs.length) {
+            return inputs.map(input => {
+                return (
+                    <div 
+                        className={input.id === 'jobTitle' ? 'span-2' : '' }
+                        key={input.id}
+                    >
+                        <Input                                 
+                            inputId={input.id}
+                            placeHolder={input.placeholder}
+                            sendData={setInputCopy}
+                        />
+                    </div>
+                )
+            })
+        }
     }
-
-    const isEmpty = (obj) => {            
-        return Object.values(obj).some(item => item === '')
-    }    
-
+              
     return (
         <>
-            <div className="resume-info">
-                <div className="resume-info__inner">
-                    <div className="resume-info__desc">
-                        <p>Your personal information that the employer can use to reach out to you.</p>
-                    </div>                    
-
-                    <form onSubmit={submitForm} className='resume-info__form'>
-                        <Input
-                            placeHolder={'First name'}
-                            sendData={recieveFormData}
-                        />
-                        <Input
-                            placeHolder={'Last name'}
-                            sendData={recieveFormData}
-                        />
-
-                        <div className="span-2">
-                            <Input
-                                placeHolder={'Job title'}
-                                sendData={recieveFormData}
-                            />
-                        </div>
-
-                        <Input
-                            placeHolder={'Email address'}    
-                            sendData={recieveFormData}
-                            type={'email'}
-                            required                            
-                        />
-                        <Input
-                            placeHolder={'Phone number'}     
-                            sendData={recieveFormData}
-                        />                                                    
-                    </form>
-                </div>
-            </div>
+            <Form                
+                description={'Your personal information that the employer can use to reach out to you.'}
+                submitForm={() => sendFormData({ personalInfo: inputs })}
+            >
+                {renderInputs(inputs)}
+            </Form>            
         </>
     )
 }

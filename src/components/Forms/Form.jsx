@@ -1,4 +1,4 @@
-export default function ResumeForms({ description, children }) {             
+export default function ResumeForms({ description, children, submitForm, disableSubmit = false }) {             
     return (
         <>
             <div className="resume-info">
@@ -8,10 +8,12 @@ export default function ResumeForms({ description, children }) {
                     </div>                    
 
                     <form className='resume-info__form'>
-                        <div className="span-2">                            
-                            {children}
-                        </div>                                                                     
+                        {children}                                                                   
                     </form>
+
+                    <div className="resume-info__submit">
+                        <button onClick={submitForm} disabled={disableSubmit} className="button">Submit</button>
+                    </div>
                 </div>
             </div>
         </>

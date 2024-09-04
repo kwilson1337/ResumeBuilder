@@ -5,15 +5,24 @@ import Form from '@/components/Forms/Form'
 import Input from '@/components/Inputs/Input'
 import { useState } from 'react'
 
-export default function stepOneForm({ recieveFormData }) {           
+export default function professionalSkillsForm({ sendFormData }) {           
     const input = {
-        id: 0,
-        placeholder: `Skill`
+        id: 1,
+        placeholder: `Skill`,
+        copy: ''
     }
 
-    const [IdCount, setIdCount] = useState(1)
+    const [IdCount, setIdCount] = useState(2)
     const [inputs, setInputs] = useState([input])
-    const [inputCount, setInputCount] = useState(inputs.length)
+    const [inputCount, setInputCount] = useState(inputs.length)    
+
+    const setInputCopy = (data) => {        
+        const objectKey = Object.keys(data)[0]
+        const foundInput = inputs.find(item =>item.id === Number(objectKey))
+        foundInput.copy = data[objectKey]            
+
+        setInputs([...new Set([...inputs, foundInput])])
+    }
    
     const repeatInput = (e) => {
         e.preventDefault()        
@@ -24,7 +33,7 @@ export default function stepOneForm({ recieveFormData }) {
         const newArray = [...inputs, newInput]
 
         setInputs(newArray)    
-        setInputCount(newArray.length)    
+        setInputCount(newArray.length)            
     }
 
     const removeInput = (e, id) => {
@@ -41,7 +50,7 @@ export default function stepOneForm({ recieveFormData }) {
         if(inputs?.length) {
             return inputs.map(input => {
                 return (
-                    <div className='input-repeater' key={input.id}>
+                    <div className='input-repeater span-2' key={input.id}>
                         <button onClick={repeatInput} className='button --rounded'>+</button>
                         {
                             inputCount > 1 
@@ -49,8 +58,9 @@ export default function stepOneForm({ recieveFormData }) {
                                 : ''
                         }
                         <Input                              
-                            placeHolder={input.placeholder + ' ' + input.id}    
-                            sendData={recieveFormData}                    
+                            placeHolder={`${input.placeholder}`}    
+                            sendData={setInputCopy}     
+                            inputId={input.id}               
                         /> 
                     </div>
                 )
@@ -59,9 +69,12 @@ export default function stepOneForm({ recieveFormData }) {
     }
     return (
         <>         
-            <Form description={'A bulleted list of all your skills.'} >
+            <Form                 
+                description={'A bulleted list of all your skills.'} 
+                submitForm={() => sendFormData({ proSkills: inputs })}
+            >
                 {renderInputs(inputs)}
-            </Form>
+            </Form>            
         </>
     )
 }

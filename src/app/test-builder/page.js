@@ -14,7 +14,7 @@ export default function Builder() {
 
     const conactInfo = {
         header: 'Contact information for employer',
-        content: <PersonalInfoForm />,
+        content: <PersonalInfoForm sendFormData={getFormData} />,
         initialEntered: true
     }
 
@@ -25,12 +25,12 @@ export default function Builder() {
 
     const education = {
         header: 'Education',
-        content: <EducationForm />
+        content: <EducationForm sendFormData={getFormData} />
     }
 
     const professionalSkills = {
         header: 'Profession skills',
-        content: <ProfessionalSkills recieveFormData={getFormData} />
+        content: <ProfessionalSkills sendFormData={getFormData} />
     }
     
     return (
