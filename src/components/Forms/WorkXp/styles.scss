@@ -1,0 +1,27 @@
+.work-xp-form {
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .form-repeater {  
+            display: flex;
+            gap: 10px;
+
+            & + .form-repeater {
+                margin-top: 10px;
+            }
+
+            .input-repeater {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    }
+
+    &__submit {
+        margin-top: 15px;
+    }
+}

@@ -6,6 +6,7 @@ import Card from '@/components/Card';
 import PersonalInfoForm from '@/components/Forms/PersonalInformation'
 import EducationForm from '@/components/Forms/Education'
 import ProfessionalSkills from '@/components/Forms/ProfessionalSkills'
+import WorkXp from '@/components/Forms/WorkXp';
 
 export default function Builder() {
     const getFormData = (data) => {
@@ -20,7 +21,7 @@ export default function Builder() {
 
     const jobInformation = {
         header: 'Job information',
-        content: 'Company name, Location, Job title, start date - end date'
+        content: <WorkXp />        
     }
 
     const education = {

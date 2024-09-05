@@ -38,7 +38,7 @@ export default function professionalSkillsForm({ sendFormData }) {
 
     const removeInput = (e, id) => {
         e.preventDefault()
-        
+                
         const removeId = inputs.findIndex(item => item.id === id)        
         const newArray = inputs.toSpliced(removeId, 1)
         

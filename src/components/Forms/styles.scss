@@ -12,7 +12,7 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         align-items: center;
-        gap: 15px;            
+        gap: 10px;            
     }
 
     .span-2 {
@@ -26,7 +26,7 @@
 
         & + .input-repeater {
             margin-top: 10px;
-        }
+        }      
     }
 
     &__submit {
