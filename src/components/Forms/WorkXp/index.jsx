@@ -6,11 +6,19 @@ import './styles.scss'
 import Form from '@/components/Forms/Form'
 import Input from '@/components/Inputs/Input'
 import { useState } from 'react'
+import { nanoid } from 'nanoid'
 
-export default function WorkXp() {       
+export default function WorkXp() {     
+    const buildIds = () => nanoid()
+    
+    const defaultInput = {
+        id: buildIds(),
+        placeholder: 'Job responsibilities',
+        copy: ''
+    }
     const defaultForm = [
         {
-            id: 0,
+            id: buildIds(),
             inputs: [
                 {
                     id: 'companyName',
@@ -39,13 +47,8 @@ export default function WorkXp() {
                 },
                 {
                     id: 'jobResponsibilities',
-                    placeholder: 'Job responsibilities:',
-                    inputs: [
-                        {
-                            id: 0,
-                            copy: ''
-                        }
-                    ]
+                    placeholder: 'Job responsibilities',
+                    inputs: [ defaultInput ]
                 },
             ]
         }
@@ -66,11 +69,34 @@ export default function WorkXp() {
                         }
                         key={input.id + form.id}
                     >
-                        <Input                                 
-                            inputId={input.id}
-                            placeHolder={input.placeholder}  
-                            sendData={(e) => setDataInForm({...e, form})}
-                        />
+                        {
+                            input.id === 'jobResponsibilities'
+                                ? input.inputs.map(item => (
+                                    <div key={item.id} className="input-repeater --col">
+                                         <div className='input-repeater --col --gap-5'>
+                                            <button onClick={(e) => duplicateRespInput(e, { form })} className="button --rounded">+</button>
+                                            { 
+                                                input.inputs.length > 1 
+                                                    ? (
+                                                        <button onClick={(e) => removeRespInput(e, { item, form })} className='button --rounded'>-</button>
+                                                    ) 
+                                                    : '' 
+                                            }
+                                        </div>
+                                        <Input                                                                             
+                                            placeHolder={item.placeholder}
+                                            sendData={(e) => setDataInForm({...e, form})}
+                                        />
+                                    </div>
+                                ))
+                                : (
+                                    <Input                                 
+                                        inputId={input.id}
+                                        placeHolder={input.placeholder}  
+                                        sendData={(e) => setDataInForm({...e, form})}
+                                    />
+                                )
+                        }                       
                     </div>
                 )
             })
@@ -104,7 +130,7 @@ export default function WorkXp() {
         setFormCount(formCount + 1)
 
         const singleForm = defaultForm[0]
-        singleForm.id = formCount
+        singleForm.id = buildIds()
 
         setForms([...forms, singleForm])
     }
@@ -128,6 +154,22 @@ export default function WorkXp() {
         foundInput.copy = data[inputKey]
         
         setForms([...new Set([...forms, foundForm])])
+    }
+
+    const duplicateRespInput = (e, { form }) => {
+        e.preventDefault()
+        const foundForm = forms.find(item => item.id === form.id)
+        const foundInputs = foundForm.inputs.find(input => input.id === 'jobResponsibilities')
+        defaultInput.id = buildIds()
+        foundInputs.inputs.push(defaultInput)
+
+        const unique = [...new Map(forms.map(item => [item['id'], item])).values()]        
+        setForms(unique)
+    }
+
+    const removeRespInput = (e, { item, form }) => {
+        e.preventDefault()
+        console.log(item, form)
     }
 
     const sendForms = () => {

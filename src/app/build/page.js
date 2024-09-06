@@ -52,7 +52,15 @@ export default function Builder() {
                                 </div>
                             </Card>                            
                         </div>
-                        <div className="resume-builder__col">hello</div>
+                        <div className="resume-builder__col">
+                            <div className='resume-builder__sticky'>
+                                <Card noPadding>
+                                    <div className='resume-builder__preview'>
+                                        hello
+                                    </div>
+                                </Card>
+                            </div>                             
+                        </div>
                     </div>
                 </div>
             </div>

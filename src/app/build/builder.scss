@@ -4,11 +4,11 @@
     &__inner {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 60px;
+        gap: 0px;
     }
 
     &__col {
-        padding: 20px;
+        padding: 10px;
 
         .szh-accordion {
 
@@ -16,6 +16,16 @@
                 margin-top: 20px;
             }
         }
+    }
+
+    &__sticky {
+        position: sticky;
+        top: 0px;
+    }
+
+    &__preview {
+        background-color: lighten(#5046e5, 30%);
+        border-radius: 10px;
     }
 
     &__save {

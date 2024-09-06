@@ -1,6 +1,8 @@
 .kw-navbar {
-    position: sticky;
-    top: 1px;        
+    // position: sticky;
+    top: 0px;       
+    z-index: 100;
+    background-color: var(--white);
 
     &__inner {
         padding: 20px 35px;
