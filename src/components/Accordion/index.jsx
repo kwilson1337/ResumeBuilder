@@ -27,7 +27,7 @@ export default function AccordionWrapper({ allowMultiple, accordionData }) {
     return (
         <>
             <Accordion allowMultiple={multiple} transition transitionTimeout={250}>
-                {accordionData.map(({ header, content, initialEntered }, i) => (
+                {accordionData.map(({ header, content, initialEntered }, i) => (                                        
                     <AccordionItem header={header} key={i} initialEntered={initialEntered}>
                         {content}
                     </AccordionItem>

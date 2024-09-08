@@ -3,7 +3,7 @@
 import './input.scss'
 import { useState } from 'react'
 
-export default function Input({ placeHolder, sendData, inputId }) {        
+export default function Input({ placeHolder, sendData, inputId, userLoadedValue }) {        
     const [copy, setCopy] = useState('')
     const getInputData = (e) => {        
         setCopy(e.target.value)
@@ -15,7 +15,7 @@ export default function Input({ placeHolder, sendData, inputId }) {
             <input 
                 className='kw-input'
                 type="text" 
-                value={copy}
+                value={userLoadedValue ?? copy}
                 data-id={inputId}
                 onChange={getInputData}
                 placeholder={placeHolder}                        

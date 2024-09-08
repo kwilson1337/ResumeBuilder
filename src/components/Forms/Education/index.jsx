@@ -5,8 +5,8 @@ import { useState } from 'react'
 import Input from '@/components/Inputs/Input.jsx'
 import Form from '@/components/Forms/Form'
 
-export default function stepOneForm({ sendFormData }) {          
-    const [inputs, setInputs] = useState([
+export default function stepOneForm({ sendFormData, userLoadedInputs }) {      
+    const defaultInputs = [
         {
             id: 'schoolName',
             placeholder: 'School name',
@@ -21,8 +21,10 @@ export default function stepOneForm({ sendFormData }) {
             id: 'yearGraduated',
             placeholder: 'Year graduated',
             copy: ''
-        }       
-    ])
+        }    
+    ]
+    
+    const [inputs, setInputs] = useState(userLoadedInputs || defaultInputs)
                
     const setInputCopy = (data) => {
         const objectKey = Object.keys(data)[0]
@@ -44,6 +46,7 @@ export default function stepOneForm({ sendFormData }) {
                             inputId={input.id}
                             placeHolder={input.placeholder}
                             sendData={setInputCopy}
+                            userLoadedValue={input.copy}
                         />
                     </div>
                 )
@@ -55,35 +58,10 @@ export default function stepOneForm({ sendFormData }) {
         <>
             <Form
                 description={'Information the employer can use to see your education level.'}
-                submitForm={() => sendFormData({ personalInfo: inputs })}
+                submitForm={() => sendFormData({ education: inputs })}
             >
                 {renderInputs(inputs)}
-            </Form>
-            {/* <div className="resume-info">
-                <div className="resume-info__inner">
-                    <div className="resume-info__desc">
-                        <p>Information the employer can use to see your education level.</p>
-                    </div>   
-
-                    <form onSubmit={submitForm} className='resume-info__form'>
-                        <Input
-                            placeHolder={'School name'}
-                            sendData={recieveFormData}
-                        />
-                        <Input
-                            placeHolder={'Degree name'}
-                            sendData={recieveFormData}
-                        />
-
-                        <div className="span-2">
-                            <Input
-                                placeHolder={'Year graduated'}
-                                sendData={recieveFormData}
-                            />
-                        </div>                                          
-                    </form>
-                </div>
-            </div> */}
+            </Form>            
         </>
     )
 }

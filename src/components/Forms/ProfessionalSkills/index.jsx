@@ -4,21 +4,21 @@ import '../styles.scss'
 import Form from '@/components/Forms/Form'
 import Input from '@/components/Inputs/Input'
 import { useState } from 'react'
+import { nanoid } from 'nanoid'
 
-export default function professionalSkillsForm({ sendFormData }) {           
+export default function professionalSkillsForm({ sendFormData, userLoadedInputs }) {           
     const input = {
-        id: 1,
+        id: 'defaultId',
         placeholder: `Skill`,
         copy: ''
     }
-
-    const [IdCount, setIdCount] = useState(2)
-    const [inputs, setInputs] = useState([input])
+    
+    const [inputs, setInputs] = useState(userLoadedInputs || [input])
     const [inputCount, setInputCount] = useState(inputs.length)    
 
     const setInputCopy = (data) => {        
         const objectKey = Object.keys(data)[0]
-        const foundInput = inputs.find(item =>item.id === Number(objectKey))
+        const foundInput = inputs.find(item =>item.id === objectKey)
         foundInput.copy = data[objectKey]            
 
         setInputs([...new Set([...inputs, foundInput])])
@@ -27,9 +27,8 @@ export default function professionalSkillsForm({ sendFormData }) {
     const repeatInput = (e) => {
         e.preventDefault()        
 
-        setIdCount(IdCount + 1)
         const newInput = {...input}                
-        newInput.id = IdCount
+        newInput.id = nanoid()
         const newArray = [...inputs, newInput]
 
         setInputs(newArray)    
@@ -38,8 +37,7 @@ export default function professionalSkillsForm({ sendFormData }) {
 
     const removeInput = (e, id) => {
         e.preventDefault()
-        
-        setIdCount(IdCount - 1)
+                
         const removeId = inputs.findIndex(item => item.id === id)        
         const newArray = inputs.toSpliced(removeId, 1)
         
@@ -61,7 +59,8 @@ export default function professionalSkillsForm({ sendFormData }) {
                         <Input                              
                             placeHolder={`${input.placeholder}`}    
                             sendData={setInputCopy}     
-                            inputId={input.id}               
+                            inputId={input.id}         
+                            userLoadedValue={input.copy}
                         /> 
                     </div>
                 )

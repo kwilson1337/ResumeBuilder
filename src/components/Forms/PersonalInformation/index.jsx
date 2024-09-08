@@ -1,12 +1,12 @@
 'use client'
 
 import '../styles.scss'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Input from '@/components/Inputs/Input.jsx'
 import Form from '@/components/Forms/Form'
 
-export default function personalInfoForm({ sendFormData }) {       
-    const [inputs, setInputs] = useState([
+export default function personalInfoForm({ sendFormData, userLoadedInputs}) {       
+    const defaultInputs = [
         {
             id: 'firstName',
             placeholder: 'First name',
@@ -32,17 +32,23 @@ export default function personalInfoForm({ sendFormData }) {
             placeholder: 'Phone Number',
             copy: ''
         }
-    ])
-
+    ]
+    const [inputs, setInputs] = useState(userLoadedInputs || defaultInputs)
+       
     const setInputCopy = (data) => {
         const objectKey = Object.keys(data)[0]
         const foundInput = inputs.find(item =>item.id === objectKey)
         foundInput.copy = data[objectKey]            
         
-        setInputs([...new Set([...inputs, foundInput])])
+        setInputs([...new Set([...inputs, foundInput])])        
     }
 
-    const renderInputs = (inputs) => {
+    const updateInputsOnSubmit = () => {        
+        sendFormData({ personalInfo: inputs })
+        setInputs(inputs)
+    }
+
+    const renderInputs = (inputs) => {        
         if(inputs.length) {
             return inputs.map(input => {
                 return (
@@ -50,9 +56,10 @@ export default function personalInfoForm({ sendFormData }) {
                         className={input.id === 'jobTitle' ? 'span-2' : '' }
                         key={input.id}
                     >
-                        <Input                                 
+                        <Input                                                             
                             inputId={input.id}
                             placeHolder={input.placeholder}
+                            userLoadedValue={input.copy}
                             sendData={setInputCopy}
                         />
                     </div>
@@ -65,7 +72,7 @@ export default function personalInfoForm({ sendFormData }) {
         <>
             <Form                
                 description={'Your personal information that the employer can use to reach out to you.'}
-                submitForm={() => sendFormData({ personalInfo: inputs })}
+                submitForm={updateInputsOnSubmit}
             >
                 {renderInputs(inputs)}
             </Form>            

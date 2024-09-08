@@ -1,5 +1,5 @@
 .resume-builder {
-    padding-top: 60px;
+    padding-top: 20px;
 
     &__inner {
         display: grid;
@@ -8,24 +8,27 @@
     }
 
     &__col {
-        padding: 10px;
-
+        padding: 10px;        
+        
         .szh-accordion {
 
             & + .szh-accordion {
                 margin-top: 20px;
             }
         }
-    }
 
-    &__sticky {
-        position: sticky;
-        top: 0px;
+        &.--purp {
+            position: sticky;
+            top: 20px;
+            height: calc(100vh - 95px);
+        }
     }
-
+    
     &__preview {
         background-color: lighten(#5046e5, 30%);
         border-radius: 10px;
+        padding: 20px;      
+        height: 100%;            
     }
 
     &__save {

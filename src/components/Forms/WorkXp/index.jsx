@@ -8,11 +8,11 @@ import Input from '@/components/Inputs/Input'
 import { useState } from 'react'
 import { nanoid } from 'nanoid'
 
-export default function WorkXp() {     
+export default function WorkXp({ sendFormData, userLoadedInputs }) {     
     const buildIds = () => nanoid()
     
     const defaultInput = {
-        id: buildIds(),
+        id: 'defaultId',
         placeholder: 'Job responsibilities',
         copy: ''
     }
@@ -54,8 +54,8 @@ export default function WorkXp() {
         }
     ]
     
-    const [forms, setForms] = useState(defaultForm)
-    const [formCount, setFormCount] = useState(1)
+    const [forms, setForms] = useState(userLoadedInputs || defaultForm)
+    const [formCount, setFormCount] = useState(userLoadedInputs ? userLoadedInputs.length : 1)
 
     const renderInputs = (inputs, form) => {
         if(inputs.length) {
@@ -70,6 +70,10 @@ export default function WorkXp() {
                         key={input.id + form.id}
                     >
                         {
+                            /**
+                             * Job Responsibilities input 
+                             * repeater
+                             */
                             input.id === 'jobResponsibilities'
                                 ? input.inputs.map(item => (
                                     <div key={item.id} className="input-repeater --col">
@@ -85,7 +89,9 @@ export default function WorkXp() {
                                         </div>
                                         <Input                                                                             
                                             placeHolder={item.placeholder}
-                                            sendData={(e) => setDataInForm({...e, form})}
+                                            sendData={(e) => setResponsibilityInputs({...e, form})}
+                                            inputId={item.id}
+                                            userLoadedValue={item.copy}
                                         />
                                     </div>
                                 ))
@@ -94,6 +100,7 @@ export default function WorkXp() {
                                         inputId={input.id}
                                         placeHolder={input.placeholder}  
                                         sendData={(e) => setDataInForm({...e, form})}
+                                        userLoadedValue={input.copy}
                                     />
                                 )
                         }                       
@@ -146,12 +153,23 @@ export default function WorkXp() {
     }
     
     const setDataInForm = (data) => {
-        const inputKey = Object.keys(data)[0]
-        const formId = data.form.id
-        const foundForm = forms.find(form => form.id === formId)
-        const foundInput = foundForm.inputs.find(input => input.id === inputKey)
-                
-        foundInput.copy = data[inputKey]
+        const inputKey = Object.keys(data)[0]        
+        const foundForm = forms.find(form => form.id === data.form.id)
+        const foundInput = foundForm.inputs.find(input => input.id === inputKey)                        
+
+        foundInput.copy = data[inputKey]                
+        setForms([...new Set([...forms, foundForm])])
+    }
+
+    const setResponsibilityInputs = (data) => {
+        const inputKey = Object.keys(data)[0]    
+        const foundForm = forms.find(form => form.id === data.form.id)        
+        const respInputs = foundForm.inputs.find(input => input.id === 'jobResponsibilities')
+        const singleInput = respInputs.inputs.find(item => item.id === inputKey)
+        const respInputKey = respInputs.inputs.findIndex(item => item.id === singleInput.id)
+        
+        singleInput.copy = data[inputKey]
+        respInputs.inputs.toSpliced(respInputKey, 1 ,singleInput)
         
         setForms([...new Set([...forms, foundForm])])
     }
@@ -159,26 +177,35 @@ export default function WorkXp() {
     const duplicateRespInput = (e, { form }) => {
         e.preventDefault()
         const foundForm = forms.find(item => item.id === form.id)
+        const foundFormIndex = forms.findIndex(item => item.id === form.id)
         const foundInputs = foundForm.inputs.find(input => input.id === 'jobResponsibilities')
+
         defaultInput.id = buildIds()
         foundInputs.inputs.push(defaultInput)
 
-        const unique = [...new Map(forms.map(item => [item['id'], item])).values()]        
-        setForms(unique)
+        setForms(forms.toSpliced(foundFormIndex, 1, foundForm))       
     }
 
     const removeRespInput = (e, { item, form }) => {
         e.preventDefault()
-        console.log(item, form)
+        const foundForm = forms.find(item => item.id === form.id)
+        const foundFormIndex = forms.findIndex(item => item.id === form.id)
+        const foundInputs = foundForm.inputs.find(input => input.id === 'jobResponsibilities')
+        const foundInputIndex = foundInputs.inputs.findIndex(input => input.id === item.id)
+        
+        foundInputs.inputs = foundInputs.inputs.toSpliced(foundInputIndex, 1)                        
+
+        setForms(forms.toSpliced(foundFormIndex, 1, foundForm))
     }
 
-    const sendForms = () => {
-        console.log(forms)
+    const sendForms = (e) => {
+        e.preventDefault()
+        sendFormData({ workXp: forms })    
     }
 
     return (
         <>
-            <div className="work-xp-form">
+            <div className="work-xp-form">             
                 <div className="work-xp-form__form">
                     {renderForms(forms)}
                 </div>

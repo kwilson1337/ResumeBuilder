@@ -1,4 +1,8 @@
 export default function ResumeForms({ description, children, submitForm, disableSubmit = false, hideSubmit = false }) {             
+    const preventFormDefault = (e) => {
+        e.preventDefault()
+        submitForm()
+    }
     return (
         <>
             <div className="resume-info">
@@ -13,15 +17,15 @@ export default function ResumeForms({ description, children, submitForm, disable
                          : ''
                     }                                     
 
-                    <form className='resume-info__form'>
+                    <div className='resume-info__form'>
                         {children}                                                                   
-                    </form>
+                    </div>
 
                     {
                         !hideSubmit
                             ? (
                                 <div className="resume-info__submit">
-                                    <button onClick={submitForm} disabled={disableSubmit} className="button">Submit</button>
+                                    <button onClick={(e) => preventFormDefault(e)} disabled={disableSubmit} className="button">Submit</button>
                                 </div>
                             )
                             : ''                        
