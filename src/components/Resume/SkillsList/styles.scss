@@ -1,20 +1,12 @@
 .skills-list {
-
-    &__inner {
-
-        h2 {
-            color: var(--color1);
-            margin-bottom: 15px;
-        }
-    }
-
+   
     &__list {
 
         ul {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
-            padding-left: 10px;
+            padding-left: 11px;
         }
     }
 }

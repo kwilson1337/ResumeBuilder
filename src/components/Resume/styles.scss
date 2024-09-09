@@ -1,10 +1,25 @@
 .resume-bones {
-    border: 1px solid var(--color2);
-    padding: 20px;
+    border: 1px solid var(--color2);    
     border-radius: 20px;    
     background-color: var(--white);        
     margin: auto;
-    max-width: 410px;
+    // max-width: 410px;
+    max-height: 100%;
     aspect-ratio: 1 / 1.414;    
     font-size: 12px;
+    overflow: hidden;    
+
+    &__body {
+        padding: 20px;
+
+        h2 {
+            color: var(--color1);
+            margin-bottom: 5px;
+            font-size: 1.4em;
+        }
+
+        > div + div {
+            margin-top: 20px;
+        }
+    }
 }

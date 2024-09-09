@@ -13,6 +13,11 @@ export default function stepOneForm({ sendFormData, userLoadedInputs }) {
             copy: ''
         },
         {
+            id:'schoolLocation',
+            placeholder: 'School location',
+            copy: ''
+        },
+        {
             id: 'degreeName',
             placeholder: 'Degree name',
             copy: ''
@@ -38,8 +43,7 @@ export default function stepOneForm({ sendFormData, userLoadedInputs }) {
         if(inputs.length) {
             return inputs.map(input => {
                 return (
-                    <div 
-                        className={input.id === 'yearGraduated' ? 'span-2' : '' }
+                    <div                        
                         key={input.id}
                     >
                         <Input                                 

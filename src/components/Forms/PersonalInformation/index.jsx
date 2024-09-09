@@ -13,7 +13,7 @@ export default function personalInfoForm({ sendFormData, userLoadedInputs}) {
             copy: ''
         },
         {
-            id: 'lastname',
+            id: 'lastName',
             placeholder: 'Last name',
             copy: ''
         },
@@ -23,13 +23,18 @@ export default function personalInfoForm({ sendFormData, userLoadedInputs}) {
             copy: ''
         },
         {
-            id: 'emailAdress',
-            placeholder: 'Email adress',
+            id: 'emailAddress',
+            placeholder: 'Email address',
             copy: ''
         },
         {
             id: 'phoneNumber',
             placeholder: 'Phone Number',
+            copy: ''
+        }, 
+        {
+            id: 'address',
+            placeholder: 'Address',
             copy: ''
         }
     ]
@@ -53,7 +58,7 @@ export default function personalInfoForm({ sendFormData, userLoadedInputs}) {
             return inputs.map(input => {
                 return (
                     <div 
-                        className={input.id === 'jobTitle' ? 'span-2' : '' }
+                        className={input.id === 'jobTitle' || input.id === 'address' ? 'span-2' : '' }
                         key={input.id}
                     >
                         <Input                                                             

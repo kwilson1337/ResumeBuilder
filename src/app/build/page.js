@@ -15,6 +15,9 @@ export default function Builder() {
 
     const getFormData = (data) => {                
         const ObjKey = Object.keys(data)[0]
+
+        console.log(ObjKey, data)
+
         setResumeData({
             ...resumeData,
             [ObjKey] : data[ObjKey]
