@@ -1,13 +1,19 @@
 .resume-bones {
     border: 1px solid var(--color2);    
-    border-radius: 20px;    
+    border-radius: 20px;
     background-color: var(--white);        
     margin: auto;
     // max-width: 410px;
     max-height: 100%;
     aspect-ratio: 1 / 1.414;    
     font-size: 12px;
-    overflow: hidden;    
+    overflow: hidden;   
+    
+    &.--print {
+        border-radius: 0px;
+        position: absolute;        
+        left: -10000px;
+    }
 
     &__body {
         padding: 20px;

@@ -9,9 +9,12 @@ import ProfessionalSkills from '@/components/Forms/ProfessionalSkills'
 import WorkXp from '@/components/Forms/WorkXp';
 import Resume from '@/components/Resume';
 import { useState } from 'react';
+// import html2canvas from 'html2canvas';
+import html2PDF from 'jspdf-html2canvas';
 
 export default function Builder() {
     const [resumeData, setResumeData] = useState({})
+    const [resumeLink, setResumeLink] = useState('')
 
     const getFormData = (data) => {                
         const ObjKey = Object.keys(data)[0]
@@ -69,7 +72,24 @@ export default function Builder() {
         professionalSkills,
         jobInformation
     ]
-        
+
+    const saveAsPdf = async () => {   
+        const resume = document.querySelector('.resume-bones')
+        const newDiv = document.createElement("div");
+        newDiv.classList.add(...['resume-bones', '--print'])
+
+        newDiv.innerHTML = resume.innerHTML
+        document.body.appendChild(newDiv)
+
+        html2PDF(newDiv, {
+            jsPDF: {
+                format: 'a4',
+              },
+              imageType: 'image/jpeg',
+              output: './pdf/generate.pdf'
+        })        
+    }
+           
     return (
         <>
             <div className="resume-builder">
@@ -80,13 +100,13 @@ export default function Builder() {
                                 <Accordion allowMultiple accordionData={accordions} />
 
                                 <div className='resume-builder__save'>
-                                    <button className='button'>Save</button>
+                                    <button onClick={saveAsPdf} className='button'>Save</button>
                                     <button className='button --outline'>Cancel</button>
                                 </div>
                             </Card>                            
                         </div>
                         <div className="resume-builder__col --purp">
-                            <div className='resume-builder__preview'>
+                            <div className='resume-builder__preview'>                                
                                 <Resume resumeData={resumeData} />
                             </div>                                                       
                         </div>

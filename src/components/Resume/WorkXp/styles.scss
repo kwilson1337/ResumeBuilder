@@ -1,0 +1,42 @@
+.resume-work-xp {
+
+    &__block {
+        margin-top: 10px;
+
+        & + .resume-work-xp__block {
+            margin-top: 20px;
+        }
+    }
+
+    &__flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__company-info,
+    &__work-length {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        &.--gap-0 {
+            gap: 0px;
+        }
+    }
+
+    &__job-title {
+        margin-top: 3px;
+    }
+
+    &__responsbilities {
+        margin-top: 5px;
+
+        ul {
+            padding-left: 11px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+    }
+}
