@@ -1,4 +1,5 @@
 import './navbar.scss'
+import Link from 'next/link';
 
 export default function NavBar() {
     return (
@@ -8,11 +9,11 @@ export default function NavBar() {
                     <div className="kw-navbar__inner">
                         <div className="kw-navbar__links">
                             <div>
-                                <a href="/">Home</a>
-                                <a href="/build">Build</a>
+                                <Link href="/">Home</Link>
+                                <Link href="/build">Build resume</Link>
                             </div>
                             <div>
-                                <a href="build" className="button --grad">Get Started</a>
+                                <Link className="button --grad" href="/build">Get Started</Link>                                
                             </div>
                         </div>
                     </div>
