@@ -9,10 +9,10 @@ export default function NavBar() {
                         <div className="kw-navbar__links">
                             <div>
                                 <a href="/">Home</a>
-                                <a href="#">Build</a>
+                                <a href="/build">Build</a>
                             </div>
                             <div>
-                                <a href="#" className="button --grad">Get Started</a>
+                                <a href="build" className="button --grad">Get Started</a>
                             </div>
                         </div>
                     </div>
